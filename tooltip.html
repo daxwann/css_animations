@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tooltip</title>
+    <style>
+      .dictionary-modal {
+        display: none;
+        position: fixed;
+        border-radius: 5px;
+        right: 10px;
+        bottom: 10px;
+        height: 15rem;
+        width: 8rem;
+        padding: 10px;
+        background-color: #00aee3;
+      }
+
+      .modal-description {
+
+      }
+
+      .tooltip {
+        cursor: pointer;
+      }
+    </style>
+    <script>
+      const dictionary = {
+        party: "party hello world",
+      };
+
+      window.onload = () => {
+        enableTooltip();
+        document.body.addEventListener("click", hideDictionary);
+      };
+
+      const showDictionary = (dictionaryModal) => (event) => {
+        dictionaryModal.innerHTML = "";
+        const key = event.target.id;
+        const description = document.createElement("p");
+        description.classList.add("modal-description");
+        description.id = "tooltipDescription";
+        description.innerText = dictionary[key];
+        dictionaryModal.append(description);
+        dictionaryModal.style.display = "block";
+      };
+
+      function hideDictionary(event) {
+        const dictionaryModal = document.getElementById("dictionaryModal");
+
+        if (
+          dictionaryModal &&
+          dictionaryModal.style.display === "block" &&
+          event.target != dictionaryModal &&
+          !event.target.classList.contains("tooltip") &&
+          !event.target.classList.contains("modal-description")
+        ) {
+          dictionaryModal.style.display = "none";
+        }
+      }
+
+      function enableTooltip() {
+        const dictionaryModal = document.createElement("div");
+        const tooltips = document.getElementsByClassName("tooltip");
+        const tooltipElementArr = [...tooltips];
+
+        dictionaryModal.classList.add("dictionary-modal");
+        dictionaryModal.id = "dictionaryModal";
+        document.body.append(dictionaryModal);
+        tooltipElementArr.forEach((e) =>
+          e.addEventListener("click", showDictionary(dictionaryModal))
+        );
+      }
+    </script>
+  </head>
+  <body>
+    <p style="font-size: 0.8em; text-align: center;">
+      <span style="color: #595959;"><strong>Other Names</strong>:</span
+      ><em> Eu excepteur sunt aliqua Lorem • </em><em> Anim sunt consequat ex mollit est fugiat irure Lorem eiusmod consectetur do commodo ullamco sunt</em> •
+      <em>Esse dolore laborum nostrud Lorem quis ullamco consequat deserunt deserunt qui.</em>
+    </p>
+
+    <p style="font-size: 1em; text-align: center;">
+      <span style="color: #00aee3;"
+        ><strong>Incididunt magna consectetur est officia est culpa in laborum elit sunt ex elit commodo duis:</strong></span
+      >
+    </p>
+
+    <div class="boxBorder-top">
+      <p style="font-family: times; font-size: 0.9em; text-align: left;">
+        Id eu pariatur excepteur cillum fugiat ipsum laboris aute magna esse amet culpa tempor anim.
+        <span style="color: #ff6600;" class="tooltip" id="party">Party</span>
+        Nostrud sint ullamco deserunt est elit excepteur non non excepteur nisi ex laboris in. Quis occaecat nostrud magna eiusmod consectetur elit pariatur anim consequat ut eu. Culpa duis anim nulla qui culpa amet incididunt exercitation et minim eu id. Irure dolor anim nulla id ut occaecat officia minim. Qui quis et sunt nulla mollit reprehenderit ad dolore id in sunt in amet incididunt. Aute cillum occaecat eiusmod duis occaecat in sunt.
+        <span class="tooltip" id="party" style="color: #ff6600;">Party</span>
+        Consequat consectetur amet elit ad ipsum ut.
+        <span style="color: #00aee3;"
+          >Culpa sunt dolore id enim cupidatat adipisicing cillum.</span
+        >
+        Amet magna consectetur sit ex..&nbsp;
+        <span style="color: #00aee3;"
+          >[Ex sit amet elit eu amet exercitation elit id commodo nulla anim duis aliqua aliquip. Consectetur mollit excepteur eu proident adipisicing proident elit consequat incididunt est nostrud culpa magna esse. Ipsum eu eiusmod qui anim culpa. In nisi pariatur eiusmod est eu consequat velit cupidatat ullamco labore dolor. Ipsum nostrud veniam tempor sint sint. Do amet reprehenderit magna in non quis Lorem.]</span
+        >
+      </p>
+    </div>
+  </body>
+</html>
