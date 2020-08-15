@@ -32,7 +32,6 @@
 
       window.onload = () => {
         enableTooltip();
-        document.body.addEventListener("click", hideDictionary);
       };
 
       const showDictionary = (dictionaryModal) => (event) => {
@@ -46,16 +45,12 @@
         dictionaryModal.style.display = "block";
       };
 
-      function hideDictionary(event) {
-        const dictionaryModal = document.getElementById("dictionaryModal");
-
+      const hideDictionary = (dictionaryModal) => (event) => {
         if (
           dictionaryModal &&
-          dictionaryModal.style.display === "block" &&
-          event.target != dictionaryModal &&
-          !event.target.classList.contains("tooltip") &&
-          !event.target.classList.contains("modal-description")
+          dictionaryModal.style.display === "block"
         ) {
+          dictionaryModal.innerHTML = "";
           dictionaryModal.style.display = "none";
         }
       }
@@ -68,8 +63,10 @@
         dictionaryModal.classList.add("dictionary-modal");
         dictionaryModal.id = "dictionaryModal";
         document.body.append(dictionaryModal);
-        tooltipElementArr.forEach((e) =>
-          e.addEventListener("click", showDictionary(dictionaryModal))
+        tooltipElementArr.forEach((e) => {
+          e.addEventListener("mouseenter", showDictionary(dictionaryModal));
+          e.addEventListener("mouseleave", hideDictionary(dictionaryModal));
+        }
         );
       }
     </script>
