@@ -8,17 +8,48 @@
       body {
         height: 100vh;
       }
-      
+
       .dictionary-modal {
-        display: none;
+        display: block;
+        font-size: 16px;
+        visibility: hidden;
         position: fixed;
         border-radius: 5px;
-        right: 10px;
-        bottom: 10px;
-        height: 15rem;
-        width: 8rem;
-        padding: 10px;
-        background-color: #00aee3;
+        border: 1px solid #00aee3;
+        right: -100%;
+        height: auto;
+        width: 10rem;
+        bottom: 1rem;
+        padding: 1rem;
+        background-color: #f5f5f5;
+        box-shadow: 5px 5px 5px darkgray;
+        transition: all 0.25s ease-in-out;
+        -moz-transition: all 0.25s ease-in-out;
+        -webkit-transition: all 0.25s ease-in-out;
+      }
+
+      .slide-in {
+        visibility: visible;
+        right: 1rem;
+      }
+
+      .modal-description ul {
+        padding-inline-start: 5px;
+        margin-block-start: 5px;
+        margin-block-end: 5px;
+        list-style-type: none;
+      }
+
+      .modal-description li {
+        margin: 1rem 0;
+      }
+
+      .text--orange {
+        color: #ff6600;
+      }
+
+      .text--blue {
+        color: #00aee3;
       }
 
       .tooltip {
@@ -26,34 +57,19 @@
       }
     </style>
     <script>
-      const dictionary = {
-        party: "party hello world",
-      };
-
       window.onload = () => {
         enableTooltip();
       };
 
-      const showDictionary = (dictionaryModal) => (event) => {
-        dictionaryModal.innerHTML = "";
-        const key = event.target.id;
-        const description = document.createElement("p");
-        description.classList.add("modal-description");
-        description.id = "tooltipDescription";
-        description.innerText = dictionary[key];
-        dictionaryModal.append(description);
-        dictionaryModal.style.display = "block";
+      const showDictionary = (dictionaryModal) => (event) => {  
+        dictionaryModal.classList.add("slide-in");
       };
 
       const hideDictionary = (dictionaryModal) => (event) => {
-        if (
-          dictionaryModal &&
-          dictionaryModal.style.display === "block"
-        ) {
-          dictionaryModal.innerHTML = "";
-          dictionaryModal.style.display = "none";
+        if (dictionaryModal && dictionaryModal.classList.contains("slide-in")) {
+          dictionaryModal.classList.remove("slide-in");          
         }
-      }
+      };
 
       function enableTooltip() {
         const dictionaryModal = document.createElement("div");
@@ -61,42 +77,77 @@
         const tooltipElementArr = [...tooltips];
 
         dictionaryModal.classList.add("dictionary-modal");
+        dictionaryModal.classList.add("fadeable");
         dictionaryModal.id = "dictionaryModal";
+
+        const description = document.createElement("p");
+        description.classList.add("modal-description");
+        description.id = "tooltipDescription";
+        description.innerHTML =
+          "<ul><li><span class='text--orange'>Orange text</span> indicates that it is a defined word and you should make sure it conforms to your specific agreement.</li><li><span class='text--blue'>[Blue and bracketed text]</span> indicates that it is a deal specific term that you should customize for your specific agreement.</li></ul>";
+        dictionaryModal.append(description);
+
         document.body.append(dictionaryModal);
         tooltipElementArr.forEach((e) => {
           e.addEventListener("mouseenter", showDictionary(dictionaryModal));
           e.addEventListener("mouseleave", hideDictionary(dictionaryModal));
-        }
-        );
+        });
       }
     </script>
   </head>
   <body>
     <p style="font-size: 0.8em; text-align: center;">
       <span style="color: #595959;"><strong>Other Names</strong>:</span
-      ><em> Eu excepteur sunt aliqua Lorem • </em><em> Anim sunt consequat ex mollit est fugiat irure Lorem eiusmod consectetur do commodo ullamco sunt</em> •
-      <em>Esse dolore laborum nostrud Lorem quis ullamco consequat deserunt deserunt qui.</em>
+      ><em> Eu excepteur sunt aliqua Lorem • </em
+      ><em>
+        Anim sunt consequat ex mollit est fugiat irure Lorem eiusmod consectetur
+        do commodo ullamco sunt</em
+      >
+      •
+      <em
+        >Esse dolore laborum nostrud Lorem quis ullamco consequat deserunt
+        deserunt qui.</em
+      >
     </p>
 
     <p style="font-size: 1em; text-align: center;">
       <span style="color: #00aee3;"
-        ><strong>Incididunt magna consectetur est officia est culpa in laborum elit sunt ex elit commodo duis:</strong></span
+        ><strong
+          >Incididunt magna consectetur est officia est culpa in laborum elit
+          sunt ex elit commodo duis:</strong
+        ></span
       >
     </p>
 
     <div class="boxBorder-top">
-      <p style="font-family: times; font-size: 0.9em; text-align: left;">
-        Id eu pariatur excepteur cillum fugiat ipsum laboris aute magna esse amet culpa tempor anim.
-        <span style="color: #ff6600;" class="tooltip" id="party">Party</span>
-        Nostrud sint ullamco deserunt est elit excepteur non non excepteur nisi ex laboris in. Quis occaecat nostrud magna eiusmod consectetur elit pariatur anim consequat ut eu. Culpa duis anim nulla qui culpa amet incididunt exercitation et minim eu id. Irure dolor anim nulla id ut occaecat officia minim. Qui quis et sunt nulla mollit reprehenderit ad dolore id in sunt in amet incididunt. Aute cillum occaecat eiusmod duis occaecat in sunt.
-        <span class="tooltip" id="party" style="color: #ff6600;">Party</span>
+      <p
+        style="font-family: times; font-size: 0.9em; text-align: left;"
+        class="tooltip"
+      >
+        Id eu pariatur excepteur cillum fugiat ipsum laboris aute magna esse
+        amet culpa tempor anim.
+        <span style="color: #ff6600;">Party</span>
+        Nostrud sint ullamco deserunt est elit excepteur non non excepteur nisi
+        ex laboris in. Quis occaecat nostrud magna eiusmod consectetur elit
+        pariatur anim consequat ut eu. Culpa duis anim nulla qui culpa amet
+        incididunt exercitation et minim eu id. Irure dolor anim nulla id ut
+        occaecat officia minim. Qui quis et sunt nulla mollit reprehenderit ad
+        dolore id in sunt in amet incididunt. Aute cillum occaecat eiusmod duis
+        occaecat in sunt.
+        <span style="color: #ff6600;">Party</span>
         Consequat consectetur amet elit ad ipsum ut.
         <span style="color: #00aee3;"
           >Culpa sunt dolore id enim cupidatat adipisicing cillum.</span
         >
         Amet magna consectetur sit ex..&nbsp;
         <span style="color: #00aee3;"
-          >[Ex sit amet elit eu amet exercitation elit id commodo nulla anim duis aliqua aliquip. Consectetur mollit excepteur eu proident adipisicing proident elit consequat incididunt est nostrud culpa magna esse. Ipsum eu eiusmod qui anim culpa. In nisi pariatur eiusmod est eu consequat velit cupidatat ullamco labore dolor. Ipsum nostrud veniam tempor sint sint. Do amet reprehenderit magna in non quis Lorem.]</span
+          >[Ex sit amet elit eu amet exercitation elit id commodo nulla anim
+          duis aliqua aliquip. Consectetur mollit excepteur eu proident
+          adipisicing proident elit consequat incididunt est nostrud culpa magna
+          esse. Ipsum eu eiusmod qui anim culpa. In nisi pariatur eiusmod est eu
+          consequat velit cupidatat ullamco labore dolor. Ipsum nostrud veniam
+          tempor sint sint. Do amet reprehenderit magna in non quis
+          Lorem.]</span
         >
       </p>
     </div>
